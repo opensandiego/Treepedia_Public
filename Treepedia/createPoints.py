@@ -23,7 +23,7 @@ def createPoints(inshp, outshp, mini_dist):
     '''
     
     import fiona
-    import os,os.path
+    import os, os.path
     from shapely.geometry import shape,mapping
     from shapely.ops import transform
     from functools import partial
@@ -45,7 +45,8 @@ def createPoints(inshp, outshp, mini_dist):
         fiona.remove(temp_cleanedStreetmap, 'ESRI Shapefile')
         print ('removed the existed tempfile')
     
-    # clean the original street maps by removing highways, if it the street map not from Open street data, users'd better to clean the data themselve
+    # clean the original street maps by removing highways, if it the street map not from Open street data,
+    # users'd better to clean the data themselve
     with fiona.open(inshp) as source, fiona.open(temp_cleanedStreetmap, 'w', driver=source.driver, crs=source.crs,schema=source.schema) as dest:
         for feat in source:
             try:
@@ -54,7 +55,8 @@ def createPoints(inshp, outshp, mini_dist):
                 if i in s:
                     continue
             except:
-                # if the street map is not osm, do nothing. You'd better to clean the street map, if you don't want to map the GVI for highways
+                # if the street map is not osm, do nothing. You'd better to clean the street map,
+                # if you don't want to map the GVI for highways
                 key = list(dest.schema['properties'].keys())[0] # get the field of the input shapefile and duplicate the input feature
                 i = feat['properties'][key]
                 if i in s:
